@@ -10,27 +10,16 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f5f7fa;
-            background-image: url('../image/JNEC-Campus.jpg');
-            background-size: cover;
+            background-color: #ffffff;
+            color: #333333;
+            background-image: url(../image/JNEC-Campus.jpg);
             background-position: center;
             background-attachment: fixed;
             position: relative;
         }
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: -1;
-        }
         .sidebar {
-            background-color: rgba(44, 62, 80, 0.9);
+            background-color: #2c3e50;
             border-right: 1px solid #34495e;
-            backdrop-filter: blur(10px);
         }
         .sidebar a {
             color: #ecf0f1;
@@ -50,17 +39,15 @@
         .header {
             background-color: rgba(255, 255, 255, 0.9);
             border-bottom: 1px solid #E5E7EB;
-            backdrop-filter: blur(10px);
         }
         .content-panel {
-            background-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             color: #000000;
             font-weight: 600;
-
+            
         }
         .table-header {
             background-color: #3498db;
@@ -80,7 +67,6 @@
         .stat-card {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
             color: white;
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .stat-card:nth-child(2) {
@@ -105,6 +91,36 @@
             padding: 4px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        .import-modal {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        /* New improvements */
+        .notification-badge {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .smooth-transition {
+            transition: all 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .progress-bar {
+            height: 6px;
+            border-radius: 3px;
+            background-color: #e5e7eb;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #3498db;
+            transition: width 0.5s ease;
+        }
     </style>
 </head>
 <body class="text-dark-1000">
@@ -115,7 +131,7 @@
             <div class="flex items-center justify-start h-20 px-6">
                  <h1 class="text-xl font-bold text-white flex items-center">
                     <div class="logo-container">
-                        <img src="../image/logo.jpg" alt="Cleaning Service Logo" class="h-12 w-12 rounded-full">
+                         <img src="../image/logo.jpg" alt="Cleaning Service Logo" class="h-12 w-12 rounded-full">
                     </div>
                     <span class="ml-3">Admin</span>
                  </h1>
@@ -152,7 +168,7 @@
                 <div class="flex items-center space-x-4">
                     <div class="relative">
                         <i data-lucide="bell" class="h-6 w-6 text-gray-600 cursor-pointer"></i>
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center notification-badge">3</span>
                     </div>
                     <div class="flex items-center space-x-2 cursor-pointer">
                         <div class="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
@@ -170,28 +186,28 @@
                     <div class="content-panel p-6 rounded-lg">
                         <!-- Stats Grid -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                            <div class="stat-card p-6 rounded-lg flex items-center justify-between">
+                            <div class="stat-card p-6 rounded-lg flex items-center justify-between hover-lift smooth-transition">
                                 <div>
                                     <p class="text-sm font-medium opacity-90">Total Bookings</p>
                                     <p class="text-3xl font-bold" id="total-bookings">0</p>
                                 </div>
                                 <div class="bg-white bg-opacity-20 p-3 rounded-full"><i data-lucide="calendar-check" class="text-white h-6 w-6"></i></div>
                             </div>
-                            <div class="stat-card p-6 rounded-lg flex items-center justify-between">
+                            <div class="stat-card p-6 rounded-lg flex items-center justify-between hover-lift smooth-transition">
                                 <div>
                                     <p class="text-sm font-medium opacity-90">Pending Jobs</p>
                                     <p class="text-3xl font-bold" id="pending-jobs">0</p>
                                 </div>
                                 <div class="bg-white bg-opacity-20 p-3 rounded-full"><i data-lucide="clock" class="text-white h-6 w-6"></i></div>
                             </div>
-                            <div class="stat-card p-6 rounded-lg flex items-center justify-between">
+                            <div class="stat-card p-6 rounded-lg flex items-center justify-between hover-lift smooth-transition">
                                 <div>
                                     <p class="text-sm font-medium opacity-90">Active Cleaners</p>
                                     <p class="text-3xl font-bold" id="active-cleaners">0</p>
                                 </div>
                                 <div class="bg-white bg-opacity-20 p-3 rounded-full"><i data-lucide="users" class="text-white h-6 w-6"></i></div>
                             </div>
-                            <div class="stat-card p-6 rounded-lg flex items-center justify-between">
+                            <div class="stat-card p-6 rounded-lg flex items-center justify-between hover-lift smooth-transition">
                                 <div>
                                     <p class="text-sm font-medium opacity-90">New Feedback</p>
                                     <p class="text-3xl font-bold" id="new-feedback">0</p>
@@ -202,7 +218,7 @@
         
                         <!-- Recent Bookings Table -->
                         <div>
-                            <h3 class="text-xl font-bold mb-4 text-white-500">Recent Bookings</h3>
+                            <h3 class="text-xl font-bold mb-4 text-gray-700">Recent Bookings</h3>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left">
                                     <thead class="table-header">
@@ -223,18 +239,18 @@
                 <!-- Users Page Content -->
                 <div id="users-page" class="page-content hidden">
                     <div class="content-panel p-6 rounded-lg mb-8">
-                        <h3 class="text-xl font-bold mb-4 text-white-700">Add New User</h3>
+                        <h3 class="text-xl font-bold mb-4 text-gray-700">Add New User</h3>
                         <form id="add-user-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
                             <div>
-                                <label for="name" class="block text-sm font-medium text-white-700">Name</label>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
                                 <input type="text" id="name" name="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
                             </div>
                             <div>
-                                <label for="email" class="block text-sm font-medium text-white-700">Email ID</label>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email ID</label>
                                 <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
                             </div>
                             <div>
-                                <label for="gender" class="block text-sm font-medium text-white-700">Gender</label>
+                                <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
                                 <select id="gender" name="gender" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
                                     <option value="" disabled selected>Select Gender</option>
                                     <option>Female</option>
@@ -243,7 +259,7 @@
                                 </select>
                             </div>
                             <div>
-                                <label for="programme" class="block text-sm font-medium text-white-700">Programme</label>
+                                <label for="programme" class="block text-sm font-medium text-gray-700">Programme</label>
                                 <select id="programme" name="programme" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
                                     <option value="" disabled selected>Select Programme</option>
                                     <option>Computer System and Network</option>
@@ -253,7 +269,7 @@
                                 </select>
                             </div>
                             <div class="md:col-span-2">
-                                <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 font-semibold flex items-center justify-center mt-4 transition duration-300">
+                                <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 font-semibold flex items-center justify-center mt-4 transition duration-300 hover-lift">
                                     <i data-lucide="plus" class="h-5 w-5 mr-2"></i>Add User
                                 </button>
                             </div>
@@ -261,8 +277,8 @@
                     </div>
                     <div class="content-panel p-6 rounded-lg">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-white-700">Current Users</h3>
-                            <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 font-semibold flex items-center transition duration-300">
+                            <h3 class="text-xl font-bold text-gray-700">Current Users</h3>
+                            <button id="import-users-btn" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 font-semibold flex items-center transition duration-300 hover-lift">
                                 <i data-lucide="upload" class="h-5 w-5 mr-2"></i>Import Users
                             </button>
                         </div>
@@ -287,10 +303,10 @@
                     <div class="content-panel p-6 rounded-lg">
                         <div class="flex border-b border-gray-200">
                             <button id="current-bookings-tab" class="booking-tab py-2 px-4 font-semibold border-b-2 active">Current Bookings</button>
-                            <button id="history-bookings-tab" class="booking-tab py-2 px-4 font-semibold text-white-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">Booking History</button>
+                            <button id="history-bookings-tab" class="booking-tab py-2 px-4 font-semibold text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">Booking History</button>
                         </div>
                         <div class="mt-4">
-                            <h3 id="booking-table-title" class="text-xl font-bold text-white-700 mb-4">Current Bookings</h3>
+                            <h3 id="booking-table-title" class="text-xl font-bold text-gray-700 mb-4">Current Bookings</h3>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left">
                                     <thead class="table-header">
@@ -383,16 +399,52 @@
         </div>
     </div>
 
-    <!-- Screenshot Preview Modal -->
-    <div id="screenshot-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 p-4">
-        <div class="relative">
-            <button id="close-screenshot-btn" class="absolute -top-4 -right-4 bg-white text-gray-700 rounded-full p-2 hover:bg-gray-200 z-10 transition duration-300">
-                <i data-lucide="x" class="h-6 w-6"></i>
-            </button>
-            <img id="screenshot-image" src="" alt="Payment Screenshot" class="max-w-full max-h-[80vh] rounded-lg">
+    <!-- Import Users Modal -->
+    <div id="import-modal" class="fixed inset-0 import-modal flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Import Users from Database</h3>
+            <div class="mb-6">
+                <p class="text-gray-600">Select how many users you want to import:</p>
+                <div class="flex items-center mt-2">
+                    <input type="range" id="user-count-slider" min="1" max="20" value="5" class="w-full">
+                    <span id="user-count-display" class="ml-4 text-blue-600 font-semibold">5</span>
+                </div>
+            </div>
+            <div class="mb-6">
+                <p class="text-gray-600">Select programme filter:</p>
+                <div class="mt-2 grid grid-cols-2 gap-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="programme-filter" value="Computer System and Network" checked>
+                        <span class="ml-2 text-sm">Computer Systems</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="programme-filter" value="Power Engineering" checked>
+                        <span class="ml-2 text-sm">Power Engineering</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="programme-filter" value="Electronics and Communication" checked>
+                        <span class="ml-2 text-sm">Electronics</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="programme-filter" value="Instrumentation and Control" checked>
+                        <span class="ml-2 text-sm">Instrumentation</span>
+                    </label>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button id="cancel-import-btn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition duration-300">Cancel</button>
+                <button id="confirm-import-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">Import Users</button>
+            </div>
         </div>
     </div>
 
+    <!-- Import Success Notification -->
+    <div id="import-success" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden z-50">
+        <div class="flex items-center">
+            <i data-lucide="check-circle" class="h-5 w-5 mr-2"></i>
+            <span id="import-success-message">Users imported successfully!</span>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -428,6 +480,29 @@
                     { id: 2, user: 'Pema Dorji', date: '26 May, 2025', amount: 'Nu. 90.00', transactionId: 'BNB-TRN-98765', receiptUrl: 'https://placehold.co/300x500/4FD1C5/FFFFFF?text=Receipt+2' },
                     { id: 3, user: 'Dechen Yangzom', date: '25 May, 2025', amount: 'Nu. 90.00', transactionId: 'BOB-1029301', receiptUrl: 'https://placehold.co/300x500/4FD1C5/FFFFFF?text=Receipt+3' },
                     { id: 4, user: 'Ugyen Dorji', date: '24 May, 2025', amount: 'Nu. 90.00', transactionId: 'BNB-TRN-98755', receiptUrl: 'https://placehold.co/300x500/4FD1C5/FFFFFF?text=Receipt+4' },
+                ],
+                // Database users for import simulation
+                databaseUsers: [
+                    { id: 101, name: 'Dorji Wangchuk', email: '0421.jnec@rub.edu.bt', programme: 'Computer System and Network' },
+                    { id: 102, name: 'Pema Lhamo', email: '0622.jnec@rub.edu.bt', programme: 'Power Engineering' },
+                    { id: 103, name: 'Karma Tshering', email: '0723.jnec@rub.edu.bt', programme: 'Electronics and Communication' },
+                    { id: 104, name: 'Sonam Dema', email: '0824.jnec@rub.edu.bt', programme: 'Instrumentation and Control' },
+                    { id: 105, name: 'Tashi Yangchen', email: '0925.jnec@rub.edu.bt', programme: 'Computer System and Network' },
+                    { id: 106, name: 'Ugyen Phuntsho', email: '1026.jnec@rub.edu.bt', programme: 'Power Engineering' },
+                    { id: 107, name: 'Dechen Zangmo', email: '1127.jnec@rub.edu.bt', programme: 'Electronics and Communication' },
+                    { id: 108, name: 'Lhamo Dolma', email: '1228.jnec@rub.edu.bt', programme: 'Instrumentation and Control' },
+                    { id: 109, name: 'Kinzang Dorji', email: '1329.jnec@rub.edu.bt', programme: 'Computer System and Network' },
+                    { id: 110, name: 'Pelden Wangmo', email: '1430.jnec@rub.edu.bt', programme: 'Power Engineering' },
+                    { id: 111, name: 'Nima Gyeltshen', email: '1531.jnec@rub.edu.bt', programme: 'Electronics and Communication' },
+                    { id: 112, name: 'Sangay Choden', email: '1632.jnec@rub.edu.bt', programme: 'Instrumentation and Control' },
+                    { id: 113, name: 'Tenzin Lhamo', email: '1733.jnec@rub.edu.bt', programme: 'Computer System and Network' },
+                    { id: 114, name: 'Jigme Dema', email: '1834.jnec@rub.edu.bt', programme: 'Power Engineering' },
+                    { id: 115, name: 'Karma Dorji', email: '1935.jnec@rub.edu.bt', programme: 'Electronics and Communication' },
+                    { id: 116, name: 'Sonam Wangdi', email: '2036.jnec@rub.edu.bt', programme: 'Instrumentation and Control' },
+                    { id: 117, name: 'Pema Tshering', email: '2137.jnec@rub.edu.bt', programme: 'Computer System and Network' },
+                    { id: 118, name: 'Dechen Wangmo', email: '2238.jnec@rub.edu.bt', programme: 'Power Engineering' },
+                    { id: 119, name: 'Ugyen Lhamo', email: '2339.jnec@rub.edu.bt', programme: 'Electronics and Communication' },
+                    { id: 120, name: 'Tashi Dema', email: '2440.jnec@rub.edu.bt', programme: 'Instrumentation and Control' },
                 ]
             };
 
@@ -439,15 +514,51 @@
             const deleteModal = document.getElementById('delete-modal');
             const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
             const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
-            const screenshotModal = document.getElementById('screenshot-modal');
-            const closeScreenshotBtn = document.getElementById('close-screenshot-btn');
-            const screenshotImage = document.getElementById('screenshot-image');
+            const importModal = document.getElementById('import-modal');
+            const importUsersBtn = document.getElementById('import-users-btn');
+            const cancelImportBtn = document.getElementById('cancel-import-btn');
+            const confirmImportBtn = document.getElementById('confirm-import-btn');
+            const userCountSlider = document.getElementById('user-count-slider');
+            const userCountDisplay = document.getElementById('user-count-display');
+            const importSuccess = document.getElementById('import-success');
+            const importSuccessMessage = document.getElementById('import-success-message');
             const currentBookingsTab = document.getElementById('current-bookings-tab');
             const historyBookingsTab = document.getElementById('history-bookings-tab');
             const bookingTableTitle = document.getElementById('booking-table-title');
             const paymentSearchInput = document.getElementById('payment-search-input');
             let itemToDelete = { id: null, type: null };
             let activeBookingTab = 'current';
+            let currentPage = 'dashboard';
+
+            // --- History API Implementation ---
+            const updateHistory = (pageId) => {
+                if (history.state?.page !== pageId) {
+                    history.pushState({ page: pageId }, '', `#${pageId}`);
+                }
+            };
+
+            const handlePopState = (event) => {
+                const pageId = event.state?.page || 'dashboard';
+                showPage(pageId, false); // Don't update history when handling popstate
+            };
+
+            const handleInitialPageLoad = () => {
+                let pageId = 'dashboard';
+                
+                // Check if there's a hash in the URL
+                if (window.location.hash) {
+                    pageId = window.location.hash.substring(1); // Remove the # character
+                }
+                
+                // Verify the pageId is valid
+                if (!pageConfig[pageId]) {
+                    pageId = 'dashboard';
+                }
+                
+                // Update history and show the page
+                updateHistory(pageId);
+                showPage(pageId, false);
+            };
 
             // --- Page Content Render Functions ---
             const renderDashboard = () => {
@@ -549,7 +660,7 @@
                 }
 
                 paymentsList.innerHTML = filteredPayments.map(payment => `
-                    <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-300">
+                    <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-300 hover-lift">
                         <div class="flex-shrink-0 mr-4">
                             <i data-lucide="user-circle" class="h-10 w-10 text-gray-400"></i>
                         </div>
@@ -597,7 +708,15 @@
                 feedback: { title: 'Service Feedback', render: renderFeedback },
             };
 
-            const showPage = (pageId) => {
+            const showPage = (pageId, updateHistoryFlag = true) => {
+                // Don't do anything if we're already on this page
+                if (currentPage === pageId) return;
+                
+                // Update browser history if needed
+                if (updateHistoryFlag) {
+                    updateHistory(pageId);
+                }
+                
                 pages.forEach(page => page.classList.add('hidden'));
                 const activePage = document.getElementById(`${pageId}-page`);
                 if (activePage) {
@@ -609,12 +728,68 @@
 
                 navLinks.forEach(link => link.classList.toggle('active', link.dataset.page === pageId));
                 lucide.createIcons();
+                
+                // Update current page
+                currentPage = pageId;
             };
 
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
+                    e.preventDefault();
                     showPage(e.currentTarget.dataset.page);
                 });
+            });
+
+            // --- Import Users Functionality ---
+            importUsersBtn.addEventListener('click', () => {
+                importModal.classList.remove('hidden');
+            });
+
+            cancelImportBtn.addEventListener('click', () => {
+                importModal.classList.add('hidden');
+            });
+
+            userCountSlider.addEventListener('input', () => {
+                userCountDisplay.textContent = userCountSlider.value;
+            });
+
+            confirmImportBtn.addEventListener('click', () => {
+                const userCount = parseInt(userCountSlider.value);
+                const selectedProgrammes = Array.from(document.querySelectorAll('.programme-filter:checked'))
+                    .map(checkbox => checkbox.value);
+                
+                // Filter database users by selected programmes
+                const filteredUsers = mockData.databaseUsers.filter(user => 
+                    selectedProgrammes.includes(user.programme)
+                );
+                
+                // Get random users from filtered list
+                const usersToImport = [];
+                const availableUsers = [...filteredUsers];
+                
+                for (let i = 0; i < Math.min(userCount, availableUsers.length); i++) {
+                    const randomIndex = Math.floor(Math.random() * availableUsers.length);
+                    usersToImport.push(availableUsers[randomIndex]);
+                    availableUsers.splice(randomIndex, 1);
+                }
+                
+                // Add imported users to the current users list
+                mockData.users.push(...usersToImport);
+                
+                // Re-render users table
+                renderUsers();
+                
+                // Close modal and show success message
+                importModal.classList.add('hidden');
+                importSuccessMessage.textContent = `${usersToImport.length} users imported successfully!`;
+                importSuccess.classList.remove('hidden');
+                
+                // Hide success message after 3 seconds
+                setTimeout(() => {
+                    importSuccess.classList.add('hidden');
+                }, 3000);
+                
+                lucide.createIcons();
             });
 
             // --- Event Listeners ---
@@ -649,14 +824,7 @@
                     deleteModal.classList.remove('hidden');
                     return;
                 }
-
-                const receiptThumbnail = e.target.closest('.receipt-thumbnail');
-                if (receiptThumbnail) {
-                    screenshotImage.src = receiptThumbnail.src;
-                    screenshotModal.classList.remove('hidden');
-                }
             });
-
 
             cancelDeleteBtn.addEventListener('click', () => {
                 deleteModal.classList.add('hidden');
@@ -691,21 +859,12 @@
             paymentSearchInput.addEventListener('input', (e) => {
                 renderPayments(e.target.value);
             });
-            
-            closeScreenshotBtn.addEventListener('click', () => {
-                screenshotModal.classList.add('hidden');
-                screenshotImage.src = '';
-            });
 
-            screenshotModal.addEventListener('click', (e) => {
-                if (e.target === screenshotModal) {
-                    screenshotModal.classList.add('hidden');
-                    screenshotImage.src = '';
-                }
-            });
+            // --- Set up browser history event listener ---
+            window.addEventListener('popstate', handlePopState);
 
             // --- Initial Load ---
-            showPage('dashboard');
+            handleInitialPageLoad();
         });
     </script>
 </body>
